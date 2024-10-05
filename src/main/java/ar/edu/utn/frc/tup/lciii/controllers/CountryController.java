@@ -29,7 +29,7 @@ public class CountryController {
             countryList = countryService.getAllCountries();
         } else if (nombre != null) {
             countryList = countryService.getCountryByName(nombre);
-        } else if (codigo != null){
+        } else if (codigo !=null){
             countryList = countryService.getCountryByCode(codigo);
         }
 
@@ -41,8 +41,18 @@ public class CountryController {
     }
 
     @GetMapping("/countries/{continent}/continent")
-    public ResponseEntity<List<CountryDTO>> getCountries(@PathVariable String continent){
+    public ResponseEntity<List<CountryDTO>> getCountriesByContinent(@PathVariable String continent){
         List<Country> countryList = countryService.getCountriesByContinent(continent);
+        List<CountryDTO> countryDTOS = new ArrayList<>();
+        for (Country country: countryList){
+            countryDTOS.add(countryService.mapToDTO(country));
+        }
+        return ResponseEntity.ok(countryDTOS);
+    }
+
+    @GetMapping("/countries/{languaje}/languaje")
+    public ResponseEntity<List<CountryDTO>> getCountriesByLanguajes(@PathVariable String languaje){
+        List<Country> countryList = countryService.getCountriesByLanguaje(languaje);
         List<CountryDTO> countryDTOS = new ArrayList<>();
         for (Country country: countryList){
             countryDTOS.add(countryService.mapToDTO(country));

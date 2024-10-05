@@ -62,6 +62,16 @@ public class CountryService {
                           .collect(Collectors.toList());
           }
 
+        public List<Country> getCountriesByLanguaje(String languaje) {
+                String url = "https://restcountries.com/v3.1/all";
+                List<Map<String, Object>> response = restTemplate.getForObject(url, List.class);
+                return response.stream()
+                        .map(this::mapToCountry)
+                        .filter(country -> languaje.equals(country.getLanguages().get(languaje)))
+                        .collect(Collectors.toList());
+        }
+
+
 
         /**
          * Agregar mapeo de campo cca3 (String)
